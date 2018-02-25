@@ -48,6 +48,6 @@
       </GridPane>
    </bottom>
    <center>
-      <Pane fx:id="view" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="800.0" BorderPane.alignment="BOTTOM_CENTER" />
    </center>
 </BorderPane>

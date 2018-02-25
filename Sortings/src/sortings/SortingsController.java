@@ -17,7 +17,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Box;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -52,18 +53,43 @@ public class SortingsController implements Initializable {
         _model.setSize(size);
         //_model.reset(size);   setSize will call reset() automatically
         //>>>>>need to add UI control>>>>>
-        
+        updateUI();
     }
     
     public void resetBtn_Click(){
-        updateUI();
+        
+        System.out.println("reset");
         _model.reset(_model.getSize());
         //>>>>>need to add UI control>>>>>
-         
+        updateUI();
     }
     
     public void updateUI(){
-        view.getChildren().addAll(new Box());
+//        Rectangle r=new Rectangle(10,100,Color.RED);
+//        Rectangle r2=new Rectangle(2,2,Color.BLUE);
+//        Rectangle r3=new Rectangle(3,3,Color.GREEN);
+//        r.relocate(400, 370);
+//        r2.relocate(0, 0);
+//        r3.relocate(800, 470);
+//        view.getChildren().addAll(r,r2,r3);
+        
+        view.getChildren().clear();
+        int[] arr=_model.getUnSortedList();
+        double step=view.getWidth()/(arr.length);
+        double unitWidth=step-3;                                                // 3 is the gap
+        double unitHeight=(view.getHeight()-5)/(arr.length);                    // 5 is the margin between the top
+        double location;
+        int index;
+        for(index=0,location=0;index<arr.length;index++)
+        {
+            double height=unitHeight*arr[index];
+            Rectangle element = new Rectangle(unitWidth,height,Color.PURPLE);
+            element.relocate(location,view.getHeight()-height);
+            view.getChildren().add(element);
+            location+=step;
+        }
+        
+        
     }
     
     
