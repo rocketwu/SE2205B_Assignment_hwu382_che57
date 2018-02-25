@@ -7,8 +7,13 @@ package sortings;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
@@ -33,15 +38,43 @@ public class SortingsController implements Initializable {
     @FXML
     Slider arraySizeSlider;
     @FXML
-    ComboBox algoithm;
+    ComboBox algorithm;
+    
+     final ObservableList<String> strategys = FXCollections.observableArrayList();
+    SortingsStrategy sortingsMethod;
     
     public Model _model;
     
     public void SetSortStrategy(){
-        
+        //System.out.println(algorithm.getValue());
+        String selected=(String)algorithm.getValue();
+        if (selected.equals("Selection Sort")){
+            sortingsMethod=new SelectionSort();
+            
+        }
+        if (selected.equals("Merge Sort")){
+            sortingsMethod=new MergeSort();
+            
+        }
     }
     
     public void sortBtn_Click(){
+        
+        sortingsMethod.Sort(_model.getUnSortedList());
+        new Thread(()->{
+            int n=0;
+            while (sortingsMethod.getThread().isAlive()){                       //use is alive to know the sorting thread is running or not, if it is not, stop updating GUI
+                Platform.runLater(()->{updateUI();});                           //really really really important!!!!!
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException ex) {
+                   
+                }
+            }
+        }).start();
+        
+        
+        
         
     }
     
@@ -88,7 +121,7 @@ public class SortingsController implements Initializable {
             view.getChildren().add(element);
             location+=step;
         }
-        
+        //System.out.println("update called");
         
     }
     
@@ -97,6 +130,11 @@ public class SortingsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         _model=new Model();
+        strategys.add("Selection Sort");
+        strategys.add("Merge Sort");
+        algorithm.setItems(strategys);
+        
+        
         arraySizeSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             arraySizeBar_ValueChanged();
         });     //use lambda expression to start a listener.

@@ -8,12 +8,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sortings.SortingsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sortings.SortingsController">
    <bottom>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="120.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="150.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="80.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="50.0" />
@@ -35,7 +35,7 @@
                   <Insets />
                </GridPane.margin>
             </Label>
-            <ComboBox fx:id="algoithm" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="algorithm" onAction="#SetSortStrategy" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Array Size" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <Slider fx:id="arraySizeSlider" max="126.0" min="32.0" value="60.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <Label fx:id="arraySize" text="#" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
@@ -48,6 +48,6 @@
       </GridPane>
    </bottom>
    <center>
-      <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="800.0" BorderPane.alignment="BOTTOM_CENTER" />
+      <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="850.0" BorderPane.alignment="BOTTOM_CENTER" />
    </center>
 </BorderPane>
