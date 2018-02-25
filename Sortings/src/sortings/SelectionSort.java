@@ -18,20 +18,39 @@ public class SelectionSort implements SortingsStrategy {
     @Override
     public void Sort(int[] array) {
        thread= new Thread(() -> {
-           while(true) {
+           
                //>>>>>>>>>>>>>sorting function here>>>>>>>>>remember to break!
+               
+               for (int i=0;i<array.length;i++){
+                   int minIndex=i;
+                   for (int j = array.length-1; j >i; j--) {
+                       if (array[minIndex]>array[j]){
+                           minIndex=j;
+                       }
+                       
+                   }
+                   swap(array,minIndex,i);
+                   try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        System.out.println("error");
+                    }
+               }
                
                
                
                //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<remember to break!
-               try {
-                   Thread.sleep(100);
-               } catch (InterruptedException ex) {
-                   System.out.println("error");
-               }
-           }
+               
+           
        });
        thread.start();
+    }
+    
+    void swap(int[] array, int x, int y){
+        if (x==y) return;
+        int temp=array[x];
+        array[x]=array[y];
+        array[y]=temp;
     }
 
     @Override

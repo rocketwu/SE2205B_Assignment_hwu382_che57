@@ -50,11 +50,9 @@ public class SortingsController implements Initializable {
         String selected=(String)algorithm.getValue();
         if (selected.equals("Selection Sort")){
             sortingsMethod=new SelectionSort();
-            
         }
         if (selected.equals("Merge Sort")){
             sortingsMethod=new MergeSort();
-            
         }
     }
     
@@ -133,7 +131,7 @@ public class SortingsController implements Initializable {
         strategys.add("Selection Sort");
         strategys.add("Merge Sort");
         algorithm.setItems(strategys);
-        
+        algorithm.setValue("Selection Sort");
         
         arraySizeSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             arraySizeBar_ValueChanged();
