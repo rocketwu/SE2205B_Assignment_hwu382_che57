@@ -17,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Box;
 
 /**
  *
@@ -49,15 +50,20 @@ public class SortingsController implements Initializable {
         arraySizeSlider.setValue(size);     
         arraySize.setText(Integer.toString(size));
         _model.setSize(size);
-        _model.reset(size);
+        //_model.reset(size);   setSize will call reset() automatically
         //>>>>>need to add UI control>>>>>
         
     }
     
     public void resetBtn_Click(){
+        updateUI();
         _model.reset(_model.getSize());
         //>>>>>need to add UI control>>>>>
-        
+         
+    }
+    
+    public void updateUI(){
+        view.getChildren().addAll(new Box());
     }
     
     
