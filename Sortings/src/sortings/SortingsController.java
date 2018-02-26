@@ -7,15 +7,10 @@ package sortings;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -60,7 +55,6 @@ public class SortingsController implements Initializable {
         
         sortingsMethod.Sort(_model.getUnSortedList());
         new Thread(()->{
-            int n=0;
             while (sortingsMethod.getThread().isAlive()){                       //use is alive to know the sorting thread is running or not, if it is not, stop updating GUI
                 Platform.runLater(()->{updateUI();});                           //really really really important!!!!!
                 try {
@@ -69,6 +63,7 @@ public class SortingsController implements Initializable {
                    
                 }
             }
+            updateUI();
         }).start();
         
         
@@ -89,7 +84,7 @@ public class SortingsController implements Initializable {
     
     public void resetBtn_Click(){
         
-        System.out.println("reset");
+        //System.out.println("reset");
         _model.reset(_model.getSize());
         //>>>>>need to add UI control>>>>>
         updateUI();
@@ -105,20 +100,30 @@ public class SortingsController implements Initializable {
 //        view.getChildren().addAll(r,r2,r3);
         
         view.getChildren().clear();
+        
+        double w=view.getWidth();
+        double h=view.getHeight();
+        if (h<=0||w<=0) {
+            //use when the program was init.
+            h=0;
+            w=850;
+        }
+        
         int[] arr=_model.getUnSortedList();
-        double step=view.getWidth()/(arr.length);
+        double step=w/(arr.length);
         double unitWidth=step-3;                                                // 3 is the gap
-        double unitHeight=(view.getHeight()-5)/(arr.length);                    // 5 is the margin between the top
+        double unitHeight=(h-5)/(arr.length);                    // 5 is the margin between the top
         double location;
         int index;
         for(index=0,location=0;index<arr.length;index++)
         {
             double height=unitHeight*arr[index];
             Rectangle element = new Rectangle(unitWidth,height,Color.PURPLE);
-            element.relocate(location,view.getHeight()-height);
+            element.relocate(location,h-height);
             view.getChildren().add(element);
             location+=step;
         }
+
         //System.out.println("update called");
         
     }
@@ -132,7 +137,8 @@ public class SortingsController implements Initializable {
         strategys.add("Merge Sort");
         algorithm.setItems(strategys);
         algorithm.setValue("Selection Sort");
-        
+        sortingsMethod=new SelectionSort();
+        arraySizeBar_ValueChanged();
         arraySizeSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             arraySizeBar_ValueChanged();
         });     //use lambda expression to start a listener.
