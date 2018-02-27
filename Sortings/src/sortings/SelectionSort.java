@@ -31,7 +31,7 @@ public class SelectionSort implements SortingsStrategy {
                    }
                    swap(array,minIndex,i);
                    try {
-                        Thread.sleep(100);
+                        Thread.sleep(50);
                     } catch (InterruptedException ex) {
                         System.out.println("error");
                     }

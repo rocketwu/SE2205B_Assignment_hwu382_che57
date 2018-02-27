@@ -35,26 +35,43 @@ public class SortingsController implements Initializable {
     @FXML
     ComboBox algorithm;
     
-     final ObservableList<String> strategys = FXCollections.observableArrayList();
+    final ObservableList<String> strategys = FXCollections.observableArrayList();
     SortingsStrategy sortingsMethod;
+    
+    Thread sort;                                                                //use Thread sort to prevent interupt.
     
     public Model _model;
     
     public void SetSortStrategy(){
         //System.out.println(algorithm.getValue());
-        String selected=(String)algorithm.getValue();
-        if (selected.equals("Selection Sort")){
-            sortingsMethod=new SelectionSort();
-        }
-        if (selected.equals("Merge Sort")){
-            sortingsMethod=new MergeSort();
-        }
+        new Thread (()->{
+            if (sort!=null) {
+                try {
+                    sort.join();
+                } catch (InterruptedException ex) {
+                    //Logger.getLogger(SortingsController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            Platform.runLater(()->{
+
+                String selected=(String)algorithm.getValue();
+                if (selected.equals("Selection Sort")){
+                    sortingsMethod=new SelectionSort();
+                }
+                if (selected.equals("Merge Sort")){
+                    sortingsMethod=new MergeSort();
+                }
+            });
+        }).start();
     }
     
     public void sortBtn_Click(){
-        
+        if (sort!=null&&sort.isAlive()) {
+            return;
+        }
         sortingsMethod.Sort(_model.getUnSortedList());
-        new Thread(()->{
+        sort=new Thread(()->{
             while (sortingsMethod.getThread().isAlive()){                       //use is alive to know the sorting thread is running or not, if it is not, stop updating GUI
                 Platform.runLater(()->{updateUI();});                           //really really really important!!!!!
                 try {
@@ -64,7 +81,8 @@ public class SortingsController implements Initializable {
                 }
             }
             Platform.runLater(()->{updateUI();});                               //note that, every function that involves the GUI need to call within Platform.runLater()!!!!!
-        }).start();
+        });
+        sort.start();
 
     }
     
