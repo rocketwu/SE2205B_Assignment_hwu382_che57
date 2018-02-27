@@ -63,12 +63,9 @@ public class SortingsController implements Initializable {
                    
                 }
             }
-            updateUI();
+            Platform.runLater(()->{updateUI();});                               //note that, every function that involves the GUI need to call within Platform.runLater()!!!!!
         }).start();
-        
-        
-        
-        
+
     }
     
     public void arraySizeBar_ValueChanged(){
@@ -105,7 +102,7 @@ public class SortingsController implements Initializable {
         double h=view.getHeight();
         if (h<=0||w<=0) {
             //use when the program was init.
-            h=0;
+            h=470;
             w=850;
         }
         

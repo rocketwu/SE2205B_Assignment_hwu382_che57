@@ -55,7 +55,7 @@ public class MergeSort implements SortingsStrategy {
             }
             index++;
             try {
-                    Thread.sleep(50);
+                    Thread.sleep(30);
                 }catch (InterruptedException ex) {
                     System.out.println("error");
                 }
