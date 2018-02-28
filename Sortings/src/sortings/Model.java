@@ -55,4 +55,16 @@ public final class Model {
         reset(this.arraySize);
     }
     
+    
+    //<<<<<<<<<<<<<<<<<<<<<<<ARE WE ARROWED TO ADD EXTRA FUNCTION IN MODEL.JAVA? SINCE THE SCHEME DIDNT MENTION.<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    public boolean isSorted()
+    {
+        
+        for (int i=1;i<intArray.length;i++)
+        {
+            if (intArray[i-1]!=(intArray[i]-1)) return false;
+        }
+        return true;
+    }
+    
 }

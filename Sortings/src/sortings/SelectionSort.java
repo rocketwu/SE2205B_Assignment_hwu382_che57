@@ -14,10 +14,9 @@ import java.util.logging.Logger;
  */
 public class SelectionSort implements SortingsStrategy {
 
-    public Thread thread;
     @Override
     public void Sort(int[] array) {
-       thread= new Thread(() -> {
+       new Thread(() -> {
            
                //>>>>>>>>>>>>>sorting function here>>>>>>>>>remember to break!
                
@@ -42,8 +41,7 @@ public class SelectionSort implements SortingsStrategy {
                //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<remember to break!
                
            
-       });
-       thread.start();
+       }).start();
     }
     
     void swap(int[] array, int x, int y){
@@ -51,11 +49,6 @@ public class SelectionSort implements SortingsStrategy {
         int temp=array[x];
         array[x]=array[y];
         array[y]=temp;
-    }
-
-    @Override
-    public Thread getThread() {
-        return thread;
     }
     
 }

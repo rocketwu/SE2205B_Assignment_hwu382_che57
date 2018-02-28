@@ -11,18 +11,11 @@ package sortings;
  */
 public class MergeSort implements SortingsStrategy {
 
-    public Thread thread;
     @Override
     public void Sort(int[] array) {
-       thread= new Thread(() -> {
+       new Thread(() -> {
            mergeSort(array,0,array.length-1);
-       });
-       thread.start();
-    }
-
-    @Override
-    public Thread getThread() {
-        return thread;
+       }).start();
     }
     
     void mergeSort(int[] a,int first,int last){

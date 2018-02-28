@@ -11,5 +11,4 @@ package sortings;
  */
 public interface SortingsStrategy {
     public void Sort(int array[]);
-    public Thread getThread();
 }
