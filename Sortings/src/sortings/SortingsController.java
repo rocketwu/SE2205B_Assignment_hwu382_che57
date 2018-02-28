@@ -19,6 +19,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 /**
  *
@@ -45,11 +46,11 @@ public class SortingsController implements Initializable {
     public void SetSortStrategy(){
         //System.out.println(algorithm.getValue());
         new Thread (()->{
-            if (sort!=null) {
+            if (sort!=null) {                                                   //if the sorting thread is processing, the change will be done after sorting.
                 try {
                     sort.join();
                 } catch (InterruptedException ex) {
-                    //Logger.getLogger(SortingsController.class.getName()).log(Level.SEVERE, null, ex);
+                    
                 }
             }
 
@@ -67,12 +68,12 @@ public class SortingsController implements Initializable {
     }
     
     public void sortBtn_Click(){
-        if (sort!=null&&sort.isAlive()) {
+        if (sort!=null&&sort.isAlive()) {                                       //prevent clicking sort btn when the array is being sorted
             return;
         }
         sortingsMethod.Sort(_model.getUnSortedList());
         sort=new Thread(()->{
-            while (sortingsMethod.getThread().isAlive()){                       //use is alive to know the sorting thread is running or not, if it is not, stop updating GUI
+            while (!_model.isSorted()){                                         //use is alive to know the sorting thread is running or not, if it is not, stop updating GUI
                 Platform.runLater(()->{updateUI();});                           //really really really important!!!!!
                 try {
                     Thread.sleep(10);
@@ -88,11 +89,11 @@ public class SortingsController implements Initializable {
     
     public void arraySizeBar_ValueChanged(){
         //System.out.println("bar changed");
-        int size = (int)Math.round(arraySizeSlider.getValue());     //round the value to integer.
+        int size = (int)Math.round(arraySizeSlider.getValue());                 //round the value to integer.
         arraySizeSlider.setValue(size);     
         arraySize.setText(Integer.toString(size));
         _model.setSize(size);
-        //_model.reset(size);   setSize will call reset() automatically
+        //_model.reset(size);                                                   setSize will call reset() automatically
         //>>>>>need to add UI control>>>>>
         updateUI();
     }
@@ -104,6 +105,13 @@ public class SortingsController implements Initializable {
         //>>>>>need to add UI control>>>>>
         updateUI();
     }
+    
+    public void exitBtn_Click(){
+        Stage s=(Stage) arraySize.getScene().getWindow();
+        s.close();
+    }
+    
+
     
     public void updateUI(){
 //        Rectangle r=new Rectangle(10,100,Color.RED);
